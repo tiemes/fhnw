@@ -1,7 +1,7 @@
 # Enable rewriting
 RewriteEngine On
 
-# Skip the public and vendor directories
+# Skip the app and vendor directories
 RewriteRule ^(app|vendor)($|/) - [L]
 
 # Skip existing files and directories
