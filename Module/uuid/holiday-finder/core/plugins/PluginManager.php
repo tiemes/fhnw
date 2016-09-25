@@ -9,7 +9,7 @@ class PluginManager
         // Create the plugin array
         $this->plugins = array();
 
-        // Get all PHP files13
+        // Get all PHP files
         $directories = new RecursiveDirectoryIterator($configuration->getApplicationDirectory());
         $iterator = new RecursiveIteratorIterator($directories);
         $regex = new RegexIterator($iterator, "%\.php$%i");
