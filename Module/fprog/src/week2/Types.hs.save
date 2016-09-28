@@ -1,0 +1,6 @@
+['a','b','c']
+('a','b','c')
+[(False,'0'),(True,'1')]
+([False,True],['0','1'])
+[tail,init,
+reverse]
