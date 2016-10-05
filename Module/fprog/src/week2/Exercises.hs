@@ -57,7 +57,7 @@ val17 = (x, True )
 -- (Bool,Bool)
 val18 = (x == 'x', True)
 
--- [Char]
+-- [Char] --> Ein Tupel benötigt ein Komma, also mindestens 2 Elemente
 val19 = ((" True "))
 
 -- ((Bool,Bool),Bool)
@@ -148,7 +148,7 @@ f1 x = x^2 + x + 1
 f2 :: Int -> Int
 f2 x = 2*x + 1
 
--- Not working
+-- Int -> Int, but not working
 -- val43 = f1
 
 -- Int
@@ -185,13 +185,13 @@ g1 x y z = x ^2 + y ^2 + z ^2
 g2 :: Int -> Int -> Int
 g2 x y = 2* x + 2* y
 
--- Not working
+-- Int -> Int -> Int -> Int, but not working
 -- val53 = g1
 
--- Not working
+-- Int -> Int -> Int, but not working
 -- val54 = g1 2
 
--- Not working
+-- Int -> Int, but not working
 -- val55 = g1 2 3
 
 -- :Int
