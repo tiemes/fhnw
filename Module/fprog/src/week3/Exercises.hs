@@ -5,20 +5,20 @@ h3 x = [(x, x), (x, x)]
 h4 x y = (x, y)
 h5 x y = [x, y]
 
--- h1 :: a -> (a, a, a)
-val1 = h1
+-- h1 :: a -> (a, a, a), but not working
+-- val1 = h1
 
--- h2 :: a -> [a]
-val2 = h2
+-- h2 :: a -> [a], but not working
+-- val2 = h2
 
--- h3 :: a -> [(a, a)]
-val3 = h3
+-- h3 :: a -> [(a, a)], but not working
+-- val3 = h3
 
--- h4 :: a -> b -> (a, b)
-val4 = h4
+-- h4 :: a -> b -> (a, b), but not working
+-- val4 = h4
 
--- h5 :: a -> a -> [a]
-val5 = h5
+-- h5 :: a -> a -> [a], but not working
+-- val5 = h5
 
 -- h1 'a' :: (Char, Char, Char)
 val6 = h1 'a'

@@ -12,11 +12,11 @@ val2 = 'x'
 -- [Char]
 val3 = "x"
 
--- Not working
--- val4 = ['x ']
+-- [Char]
+val4 = ['x']
 
--- Not working
--- val5 = [x, 'x ']
+-- [Char]
+val5 = [x, 'x']
 
 -- [Char]
 val6 = [x, x, x, x]
@@ -39,11 +39,11 @@ val10 = [[" True "]]
 -- [[Bool]]
 val12 = [[True, False], []]
 
--- Not working
--- val13 = ('x ')
+-- Char
+val13 = ('x')
 
--- Not working
--- val14 = (x, 'x ')
+-- (Char,Char)
+val14 = (x, 'x')
 
 -- (Char,Char,Char,Char)
 val15 = (x, x, x, x)
@@ -52,7 +52,7 @@ val15 = (x, x, x, x)
 val16 = ('x', "x")
 
 -- (Char,Bool)
-val17 = (x, True )
+val17 = (x, True)
 
 -- (Bool,Bool)
 val18 = (x == 'x', True)
@@ -148,7 +148,7 @@ f1 x = x^2 + x + 1
 f2 :: Int -> Int
 f2 x = 2*x + 1
 
--- Int -> Int, but not working
+-- Not working
 -- val43 = f1
 
 -- Int
@@ -194,7 +194,7 @@ g2 x y = 2* x + 2* y
 -- Int -> Int, but not working
 -- val55 = g1 2 3
 
--- :Int
+-- Int
 val56 = g1 2 3 4
 
 -- Not working
