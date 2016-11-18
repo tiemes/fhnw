@@ -133,7 +133,7 @@ val32 = f5 [] [] [2 , 2]
 -- val34 = (f6) 2
 
 -- Typing of f7, but not working
-val35 = f7
+-- val35 = f7
 
 -- Typing error
 -- val36 = f7 (2 :: Int) (2 :: Integer)
