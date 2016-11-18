@@ -127,10 +127,10 @@ val28 = f3 ('a', 'b') ('a', 'b') ('a', 'b')
 val32 = f5 [] [] [2 , 2]
 
 -- Typing of f6, but not working
-val33 = f6
+-- val33 = f6
 
 -- Typing error
-val34 = (f6) 2
+-- val34 = (f6) 2
 
 -- Typing of f7, but not working
 val35 = f7
@@ -139,7 +139,7 @@ val35 = f7
 -- val36 = f7 (2 :: Int) (2 :: Integer)
 
 -- Typing of f8, but not working
-val37 = f8
+-- val37 = f8
 
 -- f8 2 2.0 :: Fractional t => [t]
 val38 = f8 2 2.0
