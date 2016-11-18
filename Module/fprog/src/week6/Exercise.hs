@@ -43,6 +43,7 @@ f10 = [f09 , \x -> x+1] -- TODO
 -- f11 :: t -> Integer -> Integer, () -> Char)
 f11 = \_ -> (\x -> x+1, \() -> 'a') -- TODO
 
+
 -- Exercise 2
 
 x ^+^ y = x^2 + y^2
