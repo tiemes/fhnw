@@ -1,0 +1,3 @@
+ch.fhnw.vesys.bank.local.Driver
+-
+ch.fhnw.vesys.bank.socket.Driver localhost 1234

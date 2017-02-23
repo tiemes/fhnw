@@ -1,0 +1,11 @@
+# Build system
+target/
+bin/
+
+# IDE from JetBrains
+.idea
+*.iml
+
+# IDE from Eclipse
+.classpath
+.project
