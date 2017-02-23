@@ -3,7 +3,9 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.bank;
+package ch.fhnw.vesys.clientrun;
+
+import ch.fhnw.vesys.client.Client;
 
 import javax.swing.*;
 import java.io.BufferedReader;

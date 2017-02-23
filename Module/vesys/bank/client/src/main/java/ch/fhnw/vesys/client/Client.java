@@ -3,8 +3,9 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.bank;
+package ch.fhnw.vesys.client;
 
+import ch.fhnw.vesys.bank.BankDriver;
 import ch.fhnw.vesys.bank.gui.BankGUI;
 
 import javax.swing.*;
