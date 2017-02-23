@@ -3,11 +3,11 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.bank.local;
+package ch.fhnw.vesys.shared.local;
 
-import ch.fhnw.vesys.bank.BankDriver;
-import ch.fhnw.vesys.bank.InactiveException;
-import ch.fhnw.vesys.bank.OverdrawException;
+import ch.fhnw.vesys.shared.BankDriver;
+import ch.fhnw.vesys.shared.InactiveException;
+import ch.fhnw.vesys.shared.OverdrawException;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class Driver implements BankDriver {
         return bank;
     }
 
-    static class Bank implements ch.fhnw.vesys.bank.Bank {
+    static class Bank implements ch.fhnw.vesys.shared.Bank {
 
         private final Map<String, Account> accounts = new HashMap<>();
 
@@ -61,12 +61,12 @@ public class Driver implements BankDriver {
         }
 
         @Override
-        public ch.fhnw.vesys.bank.Account getAccount(String number) {
+        public ch.fhnw.vesys.shared.Account getAccount(String number) {
             return accounts.get(number);
         }
 
         @Override
-        public void transfer(ch.fhnw.vesys.bank.Account from, ch.fhnw.vesys.bank.Account to, double amount)
+        public void transfer(ch.fhnw.vesys.shared.Account from, ch.fhnw.vesys.shared.Account to, double amount)
             throws IOException, InactiveException, OverdrawException {
             // TODO has to be implemented
             System.out.println("Bank.transfer has to be implemented");
@@ -74,7 +74,7 @@ public class Driver implements BankDriver {
 
     }
 
-    static class Account implements ch.fhnw.vesys.bank.Account {
+    static class Account implements ch.fhnw.vesys.shared.Account {
         private String number;
         private String owner;
         private double balance;

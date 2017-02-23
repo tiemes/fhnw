@@ -1,3 +1,3 @@
-ch.fhnw.vesys.bank.local.Driver
+ch.fhnw.vesys.shared.local.Driver
 -
-ch.fhnw.vesys.bank.socket.Driver localhost 1234
+ch.fhnw.vesys.shared.socket.Driver localhost 1234

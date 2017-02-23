@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.bank;
+package ch.fhnw.vesys.shared;
 
 /**
  * The OverdrawException is thrown when a bank transaction is called which would

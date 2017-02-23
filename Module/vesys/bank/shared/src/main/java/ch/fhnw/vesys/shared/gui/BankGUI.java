@@ -3,10 +3,10 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.bank.gui;
+package ch.fhnw.vesys.shared.gui;
 
-import ch.fhnw.vesys.bank.*;
-import ch.fhnw.vesys.bank.gui.tests.BankTest;
+import ch.fhnw.vesys.shared.*;
+import ch.fhnw.vesys.shared.gui.tests.BankTest;
 
 import javax.swing.*;
 import java.awt.*;
@@ -93,15 +93,15 @@ public class BankGUI extends JFrame {
         if (test != null) {
             tests.add(test);
         }
-        test = loadTest("bank.gui.tests.EfficiencyTestCONPR");
+        test = loadTest("shared.gui.tests.EfficiencyTestCONPR");
         if (test != null) {
             tests.add(test);
         }
-        test = loadTest("bank.gui.tests.WarmUp");
+        test = loadTest("shared.gui.tests.WarmUp");
         if (test != null) {
             tests.add(test);
         }
-        test = loadTest("bank.gui.tests.ThreadingTest");
+        test = loadTest("shared.gui.tests.ThreadingTest");
         if (test != null) {
             tests.add(test);
         }
@@ -113,7 +113,7 @@ public class BankGUI extends JFrame {
         if (test != null) {
             tests.add(test);
         }
-        test = loadTest("bank.gui.tests.ConcurrentReads");
+        test = loadTest("shared.gui.tests.ConcurrentReads");
         if (test != null) {
             tests.add(test);
         }

@@ -5,8 +5,8 @@
 
 package ch.fhnw.vesys.client;
 
-import ch.fhnw.vesys.bank.BankDriver;
-import ch.fhnw.vesys.bank.gui.BankGUI;
+import ch.fhnw.vesys.shared.BankDriver;
+import ch.fhnw.vesys.shared.gui.BankGUI;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -26,8 +26,8 @@ import java.io.IOException;
  * implementation.
  * <p>
  * <pre>
- * java Client Driver
- * java Client bank.sockets.Driver localhost 1234
+ * java Client ch.fhnw.vesys.shared.local.Driver
+ * java Client ch.finw.vesys.shared.socket.Driver localhost 1234
  * </pre>
  *
  * @author Dominik Gruntz

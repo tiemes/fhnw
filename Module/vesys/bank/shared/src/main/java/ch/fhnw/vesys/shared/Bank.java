@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.bank;
+package ch.fhnw.vesys.shared;
 
 import java.io.IOException;
 import java.util.Set;

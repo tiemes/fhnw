@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.bank;
+package ch.fhnw.vesys.shared;
 
 /**
  * The InactiveException is thrown when a bank transaction is called on an
