@@ -26,8 +26,8 @@ import java.io.IOException;
  * implementation.
  * <p>
  * <pre>
- * java Client ch.fhnw.vesys.shared.local.Driver
- * java Client ch.finw.vesys.shared.socket.Driver localhost 1234
+ * java Client ch.fhnw.vesys.shared.local.LocalDriver
+ * java Client ch.finw.vesys.shared.socket.SocketDriver localhost 1234
  * </pre>
  *
  * @author Dominik Gruntz
