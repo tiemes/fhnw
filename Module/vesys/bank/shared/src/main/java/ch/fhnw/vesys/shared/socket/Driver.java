@@ -116,5 +116,11 @@ public class Driver implements BankDriver {
             // TODO has to be implemented
             System.out.println("Account.withdraw has to be implemented");
         }
+
+        @Override
+        public void close() throws IOException {
+            // TODO has to be implemented
+            System.out.println("Account.close has to be implemented");
+        }
     }
 }

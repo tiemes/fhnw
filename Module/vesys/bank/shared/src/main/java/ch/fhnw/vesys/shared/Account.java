@@ -55,8 +55,7 @@ public interface Account {
      * @pre amount &ge; 0
      * @pre isActive()
      */
-    void deposit(double amount) throws IOException,
-        IllegalArgumentException, InactiveException;
+    void deposit(double amount) throws IOException, IllegalArgumentException, InactiveException;
 
     /**
      * Withdraws the given amount from the account.
@@ -70,8 +69,7 @@ public interface Account {
      * @pre amount &ge; 0
      * @pre isActive()
      */
-    void withdraw(double amount) throws IOException,
-        IllegalArgumentException, OverdrawException, InactiveException;
+    void withdraw(double amount) throws IOException, IllegalArgumentException, OverdrawException, InactiveException;
 
     /**
      * Returns the balance of the account. The balance of an account which has
@@ -82,4 +80,11 @@ public interface Account {
      * @throws IOException if a remoting or communication problem occurs
      */
     double getBalance() throws IOException;
+
+    /**
+     * Close the account.
+     *
+     * @throws IOException if a remoting or communication problem occurs
+     */
+    void close() throws IOException;
 }

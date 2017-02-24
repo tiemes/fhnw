@@ -77,7 +77,5 @@ public interface Bank {
      * @throws IOException              if a remoting or communication problem occurs
      * @pre amount &ge; 0
      */
-    void transfer(Account a, Account b, double amount)
-        throws IOException, IllegalArgumentException, OverdrawException,
-        InactiveException;
+    void transfer(Account a, Account b, double amount) throws IOException, IllegalArgumentException, OverdrawException, InactiveException;
 }

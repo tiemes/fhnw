@@ -290,7 +290,6 @@ public class FunctionalityTest implements BankTest {
         if (msg == null)
             msg = "Your implementation passed all unit tests";
 
-        JOptionPane.showMessageDialog(context, msg, "Test Result",
-            JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(context, msg, "Test Result", JOptionPane.INFORMATION_MESSAGE);
     }
 }

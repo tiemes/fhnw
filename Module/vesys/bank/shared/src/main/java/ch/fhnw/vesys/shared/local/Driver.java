@@ -5,30 +5,23 @@
 
 package ch.fhnw.vesys.shared.local;
 
-import ch.fhnw.vesys.shared.BankDriver;
-import ch.fhnw.vesys.shared.InactiveException;
-import ch.fhnw.vesys.shared.OverdrawException;
+import ch.fhnw.vesys.shared.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Driver implements BankDriver {
 
-    private Bank bank = null;
+    private final Bank bank = new LocalBank();
 
     @Override
     public void connect(String[] args) {
-        bank = new Bank();
-        System.out.println("connected...");
+        System.out.println("Bank connected...");
     }
 
     @Override
     public void disconnect() {
-        bank = null;
-        System.out.println("disconnected...");
+        System.out.println("Bank disconnected...");
     }
 
     @Override
@@ -36,53 +29,83 @@ public class Driver implements BankDriver {
         return bank;
     }
 
-    static class Bank implements ch.fhnw.vesys.shared.Bank {
+    static class LocalBank implements Bank {
 
         private final Map<String, Account> accounts = new HashMap<>();
 
         @Override
-        public Set<String> getAccountNumbers() {
-            System.out.println("Bank.getAccountNumbers has to be implemented");
-            return new HashSet<String>(); // TODO has to be replaced
+        public Set<String> getAccountNumbers() throws IOException {
+            Set<String> numbers = new HashSet<>();
+            Iterator iterator = accounts.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry pair = (Map.Entry) iterator.next();
+                String number = (String) pair.getKey();
+                Account account = (Account) pair.getValue();
+                if (account.isActive()) {
+                    numbers.add(number);
+                }
+            }
+            return numbers;
         }
 
         @Override
         public String createAccount(String owner) {
-            // TODO has to be implemented
-            System.out.println("Bank.createAccount has to be implemented");
-            return null;
+            String uuid = UUID.randomUUID().toString();
+            Account account = new LocalAccount(owner, uuid);
+            accounts.put(uuid, account);
+            return uuid;
         }
 
         @Override
-        public boolean closeAccount(String number) {
-            // TODO has to be implemented
-            System.out.println("Bank.closeAccount has to be implemented");
-            return false;
+        public boolean closeAccount(String number) throws IOException {
+            Account account = getAccount(number);
+
+            if (account == null) {
+                return false;
+            }
+
+            if (!account.isActive()) {
+                return false;
+            }
+
+            if (account.getBalance() != 0) {
+                return false;
+            }
+
+            account.close();
+            return true;
         }
 
         @Override
-        public ch.fhnw.vesys.shared.Account getAccount(String number) {
+        public Account getAccount(String number) {
             return accounts.get(number);
         }
 
         @Override
-        public void transfer(ch.fhnw.vesys.shared.Account from, ch.fhnw.vesys.shared.Account to, double amount)
-            throws IOException, InactiveException, OverdrawException {
-            // TODO has to be implemented
-            System.out.println("Bank.transfer has to be implemented");
-        }
+        public void transfer(Account from, Account to, double amount) throws IOException, InactiveException, OverdrawException {
 
+            if (!to.isActive()) {
+                throw new InactiveException("The account of the receiver is inactive");
+            }
+
+            from.withdraw(amount);
+            to.deposit(amount);
+        }
     }
 
-    static class Account implements ch.fhnw.vesys.shared.Account {
-        private String number;
-        private String owner;
-        private double balance;
-        private boolean active = true;
+    static class LocalAccount implements Account {
 
-        Account(String owner) {
+        private String number;
+
+        private String owner;
+
+        private double balance;
+
+        public boolean active = true;
+
+        LocalAccount(String owner, String number) {
             this.owner = owner;
-            // TODO account number has to be set here or has to be passed using the constructor
+            this.number = number;
         }
 
         @Override
@@ -107,14 +130,37 @@ public class Driver implements BankDriver {
 
         @Override
         public void deposit(double amount) throws InactiveException {
-            // TODO has to be implemented
-            System.out.println("Account.deposit has to be implemented");
+            if (!active) {
+                throw new InactiveException("The current account is not active");
+            }
+
+            if (amount < 0) {
+                throw new IllegalArgumentException("The deposit amount has to be greater than 0");
+            }
+
+            balance += amount;
         }
 
         @Override
         public void withdraw(double amount) throws InactiveException, OverdrawException {
-            // TODO has to be implemented
-            System.out.println("Account.withdraw has to be implemented");
+            if (!active) {
+                throw new InactiveException("The current account is not active");
+            }
+
+            if (amount < 0) {
+                throw new IllegalArgumentException("The withdraw amount has to be greater than 0");
+            }
+
+            if (balance - amount < 0) {
+                throw new OverdrawException("The current amount would overdraw the account");
+            }
+
+            balance -= amount;
+        }
+
+        @Override
+        public void close() throws IOException {
+            active = false;
         }
     }
 }
