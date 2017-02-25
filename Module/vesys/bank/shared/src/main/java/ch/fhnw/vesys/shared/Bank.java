@@ -6,6 +6,7 @@
 package ch.fhnw.vesys.shared;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Set;
  * @version 3.0
  * @see Account
  */
-public interface Bank {
+public interface Bank extends Serializable {
 
     /**
      * Creates a new account. As result, the method returns the account number

@@ -12,7 +12,6 @@
     <modules>
         <module>client</module>
         <module>client-run</module>
-        <module>server-local</module>
         <module>server-socket</module>
         <module>shared</module>
     </modules>

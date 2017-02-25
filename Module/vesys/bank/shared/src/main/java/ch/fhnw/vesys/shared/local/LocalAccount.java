@@ -5,8 +5,9 @@ import ch.fhnw.vesys.shared.InactiveException;
 import ch.fhnw.vesys.shared.OverdrawException;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-class LocalAccount implements Account {
+public class LocalAccount implements Account {
 
     private String number;
 
@@ -16,7 +17,7 @@ class LocalAccount implements Account {
 
     public boolean active = true;
 
-    LocalAccount(String owner, String number) {
+    public LocalAccount(String owner, String number) {
         this.owner = owner;
         this.number = number;
     }

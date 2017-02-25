@@ -6,6 +6,7 @@
 package ch.fhnw.vesys.shared;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 /**
  * The Account interface represents a single account. It can be used to deposit
@@ -16,7 +17,7 @@ import java.io.IOException;
  * @version 3.0
  * @see Bank
  */
-public interface Account {
+public interface Account extends Serializable {
 
     /**
      * Returns the account number.

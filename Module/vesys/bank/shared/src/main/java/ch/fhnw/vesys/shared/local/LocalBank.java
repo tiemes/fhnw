@@ -8,7 +8,7 @@ import ch.fhnw.vesys.shared.OverdrawException;
 import java.io.IOException;
 import java.util.*;
 
-class LocalBank implements Bank {
+public class LocalBank implements Bank {
 
     private final Map<String, Account> accounts = new HashMap<>();
 
