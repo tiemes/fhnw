@@ -46,11 +46,11 @@ public class Sender {
 
         LocalAccount localaccount = new LocalAccount(socketaccount.getOwner(), socketaccount.getNumber());
 
-        if (!socketaccount.isActive()) {
+        if (socketaccount.isActive()) {
+            localaccount.deposit(socketaccount.getBalance());
+        } else {
             localaccount.close();
         }
-
-        localaccount.deposit(socketaccount.getBalance());
 
         return localaccount;
     }

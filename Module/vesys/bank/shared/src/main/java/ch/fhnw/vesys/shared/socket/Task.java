@@ -56,7 +56,7 @@ public abstract class Task implements Serializable {
 
         @Override
         public void executeTask(BankDriver driver) throws Exception {
-            // Do nothing and return a null pointer in the result cast. This will trigger a null pointer exception
+            // Do nothing and return a null pointer in the result cast. This will trigger a null pointer exception.
         }
     }
 
