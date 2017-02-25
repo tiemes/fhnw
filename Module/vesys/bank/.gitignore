@@ -7,5 +7,6 @@ bin/
 *.iml
 
 # IDE from Eclipse
+.settings/
 .classpath
 .project
