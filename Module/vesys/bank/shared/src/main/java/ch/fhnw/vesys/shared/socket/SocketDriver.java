@@ -9,6 +9,8 @@ public class SocketDriver implements BankDriver {
 
     @Override
     public void connect(String[] args) {
+        Sender.hostname = args[0];
+        Sender.port = Integer.parseInt(args[1]);
     }
 
     @Override

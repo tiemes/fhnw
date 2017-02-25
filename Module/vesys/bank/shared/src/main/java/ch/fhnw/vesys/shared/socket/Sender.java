@@ -12,9 +12,13 @@ import java.net.Socket;
 
 public class Sender {
 
+    public static String hostname = "127.0.0.1";
+
+    public static int port = 8080;
+
     public static Task send(Task task) {
         try {
-            Socket socket = new Socket("127.0.0.1", 8080);
+            Socket socket = new Socket(hostname, port);
             ObjectOutput outputstream = new ObjectOutputStream(socket.getOutputStream());
             outputstream.writeObject(task);
             ObjectInputStream inputstream = new ObjectInputStream(socket.getInputStream());
