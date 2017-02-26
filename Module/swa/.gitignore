@@ -1,0 +1,4 @@
+# IDE from VisualParadigm
+*.vpp.bak_*
+*.vpp.lck
+*.vux
