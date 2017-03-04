@@ -1,3 +1,8 @@
+# IDE from JetBrains
+target/
+.idea/
+*.iml
+
 # IDE from VisualParadigm
 *.vpp.bak_*
 *.vpp.lck
