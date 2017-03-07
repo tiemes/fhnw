@@ -13,6 +13,7 @@
         <module>client</module>
         <module>client-run</module>
         <module>server-socket</module>
+        <module>server-servlet</module>
         <module>shared</module>
     </modules>
     <build>
