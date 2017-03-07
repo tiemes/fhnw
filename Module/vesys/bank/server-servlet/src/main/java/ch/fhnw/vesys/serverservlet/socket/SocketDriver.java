@@ -1,7 +1,7 @@
 package ch.fhnw.vesys.serverservlet.socket;
 
-import ch.fhnw.vesys.shared.Bank;
-import ch.fhnw.vesys.shared.BankDriver;
+import ch.fhnw.vesys.shared.api.Bank;
+import ch.fhnw.vesys.shared.api.BankDriver;
 
 public class SocketDriver implements BankDriver {
 

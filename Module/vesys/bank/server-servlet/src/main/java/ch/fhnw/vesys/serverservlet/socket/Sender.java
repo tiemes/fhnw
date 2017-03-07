@@ -1,8 +1,8 @@
 package ch.fhnw.vesys.serverservlet.socket;
 
-import ch.fhnw.vesys.shared.Account;
-import ch.fhnw.vesys.shared.InactiveException;
-import ch.fhnw.vesys.shared.local.LocalAccount;
+import ch.fhnw.vesys.shared.api.Account;
+import ch.fhnw.vesys.shared.api.InactiveException;
+import ch.fhnw.vesys.shared.local.LocalDriver;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -44,12 +44,13 @@ public class Sender {
             return null;
         }
 
-        LocalAccount localaccount = new LocalAccount(socketaccount.getOwner(), socketaccount.getNumber());
+        Account localaccount = new LocalDriver.LocalAccount(socketaccount.getOwner(), socketaccount.getNumber());
 
         if (socketaccount.isActive()) {
             localaccount.deposit(socketaccount.getBalance());
         } else {
-            localaccount.close();
+            // TODO: Fix method call
+            // localaccount.close();
         }
 
         return localaccount;

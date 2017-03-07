@@ -3,10 +3,10 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.shared.gui.tests;
+package ch.fhnw.vesys.client.tests;
 
-import ch.fhnw.vesys.shared.Account;
-import ch.fhnw.vesys.shared.Bank;
+import ch.fhnw.vesys.shared.api.Account;
+import ch.fhnw.vesys.shared.api.Bank;
 
 import javax.swing.*;
 

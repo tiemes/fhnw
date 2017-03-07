@@ -3,10 +3,10 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.shared.gui;
+package ch.fhnw.vesys.client;
 
-import ch.fhnw.vesys.shared.*;
-import ch.fhnw.vesys.shared.gui.tests.BankTest;
+import ch.fhnw.vesys.client.tests.BankTest;
+import ch.fhnw.vesys.shared.api.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -89,31 +89,31 @@ public class BankGUI extends JFrame {
         setBackground(Color.lightGray);
 
         BankTest test;
-        test = loadTest("ch.fhnw.vesys.shared.gui.tests.EfficiencyTestDS");
+        test = loadTest("ch.fhnw.vesys.client.tests.EfficiencyTestDS");
         if (test != null) {
             tests.add(test);
         }
-        test = loadTest("ch.fhnw.vesys.shared.gui.tests.EfficiencyTestCONPR");
+        test = loadTest("ch.fhnw.vesys.client.tests.EfficiencyTestCONPR");
         if (test != null) {
             tests.add(test);
         }
-        test = loadTest("ch.fhnw.vesys.shared.gui.tests.WarmUp");
+        test = loadTest("ch.fhnw.vesys.client.tests.WarmUp");
         if (test != null) {
             tests.add(test);
         }
-        test = loadTest("ch.fhnw.vesys.shared.gui.tests.ThreadingTest");
+        test = loadTest("ch.fhnw.vesys.client.tests.ThreadingTest");
         if (test != null) {
             tests.add(test);
         }
-        test = loadTest("ch.fhnw.vesys.shared.gui.tests.FunctionalityTest");
+        test = loadTest("ch.fhnw.vesys.client.tests.FunctionalityTest");
         if (test != null) {
             tests.add(test);
         }
-        test = loadTest("ch.fhnw.vesys.shared.gui.tests.TransferTest");
+        test = loadTest("ch.fhnw.vesys.client.tests.TransferTest");
         if (test != null) {
             tests.add(test);
         }
-        test = loadTest("ch.fhnw.vesys.shared.gui.tests.ConcurrentReads");
+        test = loadTest("ch.fhnw.vesys.client.tests.ConcurrentReads");
         if (test != null) {
             tests.add(test);
         }

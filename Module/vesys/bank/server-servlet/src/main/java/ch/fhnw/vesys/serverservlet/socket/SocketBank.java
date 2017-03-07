@@ -1,9 +1,9 @@
 package ch.fhnw.vesys.serverservlet.socket;
 
-import ch.fhnw.vesys.shared.Account;
-import ch.fhnw.vesys.shared.Bank;
-import ch.fhnw.vesys.shared.InactiveException;
-import ch.fhnw.vesys.shared.OverdrawException;
+import ch.fhnw.vesys.shared.api.Account;
+import ch.fhnw.vesys.shared.api.Bank;
+import ch.fhnw.vesys.shared.api.InactiveException;
+import ch.fhnw.vesys.shared.api.OverdrawException;
 
 import java.io.IOException;
 import java.util.Set;

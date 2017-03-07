@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.shared;
+package ch.fhnw.vesys.shared.api;
 
 import java.io.IOException;
 

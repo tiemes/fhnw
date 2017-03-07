@@ -1,6 +1,6 @@
 package ch.fhnw.vesys.serverservlet;
 
-import ch.fhnw.vesys.shared.BankDriver;
+import ch.fhnw.vesys.shared.api.BankDriver;
 import ch.fhnw.vesys.shared.socket.Task;
 
 import java.io.ObjectInputStream;
@@ -23,7 +23,7 @@ public class RequestHandler implements Runnable {
         try {
             ObjectInputStream inputstream = new ObjectInputStream(socket.getInputStream());
             Task task = (Task) inputstream.readObject();
-            task.executeHandledTask(bankdriver);
+            task.execute(bankdriver);
             ObjectOutputStream outputstream = new ObjectOutputStream(socket.getOutputStream());
             outputstream.writeObject(task);
             inputstream.close();

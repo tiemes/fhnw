@@ -1,7 +1,6 @@
 package ch.fhnw.vesys.serverservlet;
 
-import ch.fhnw.vesys.serversocket.RequestHandler;
-import ch.fhnw.vesys.shared.BankDriver;
+import ch.fhnw.vesys.shared.api.BankDriver;
 import ch.fhnw.vesys.shared.local.LocalDriver;
 
 import java.io.IOException;

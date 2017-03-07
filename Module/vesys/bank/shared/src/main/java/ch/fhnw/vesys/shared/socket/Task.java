@@ -1,194 +1,163 @@
 package ch.fhnw.vesys.shared.socket;
 
-import ch.fhnw.vesys.shared.Account;
-import ch.fhnw.vesys.shared.BankDriver;
-import ch.fhnw.vesys.shared.InactiveException;
-import ch.fhnw.vesys.shared.OverdrawException;
+import ch.fhnw.vesys.shared.api.Account;
+import ch.fhnw.vesys.shared.api.BankDriver;
+import ch.fhnw.vesys.shared.api.InactiveException;
+import ch.fhnw.vesys.shared.api.OverdrawException;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.function.BiFunction;
 
-public abstract class Task implements Serializable {
+public class Task implements Serializable {
 
-    protected Object result;
+    private TaskFunction taskfunction;
 
-    protected Exception exception;
+    private Object[] parameters;
 
-    public abstract void executeTask(BankDriver driver) throws Exception;
+    private Object result;
 
-    public void executeHandledTask(BankDriver driver) {
+    Task(TaskFunction taskfunction, Object... parameters) {
+        this.taskfunction = taskfunction;
+        this.parameters = parameters;
+    }
+
+    public void execute(BankDriver bankdriver) {
         try {
-            executeTask(driver);
+            result = taskfunction.apply(bankdriver, parameters);
         } catch (Exception exception) {
-            this.exception = exception;
+            result = exception;
         }
     }
 
-    public Object getResult() {
+    Object getResult() {
         return result;
     }
 
-    public void throwPossibleIoException() throws IOException {
-        if (exception != null && exception instanceof IOException) {
-            throw new IOException(exception.getMessage(), exception);
+    void throwPossibleIoException() throws IOException {
+        if (result != null && result instanceof IOException) {
+            throw (IOException) result;
         }
     }
 
-    public void throwPossibleIllegalArgumentException() throws IllegalArgumentException {
-        if (exception != null && exception instanceof IllegalArgumentException) {
-            throw new IllegalArgumentException(exception.getMessage(), exception);
+    void throwPossibleIllegalArgumentException() throws IllegalArgumentException {
+        if (result instanceof IllegalArgumentException) {
+            throw (IllegalArgumentException) result;
         }
     }
 
-    public void throwPossibleInactiveEception() throws InactiveException {
-        if (exception != null && exception instanceof InactiveException) {
-            throw new InactiveException(exception.getMessage(), exception);
+    void throwPossibleInactiveEception() throws InactiveException {
+        if (result instanceof InactiveException) {
+            throw (InactiveException) result;
         }
     }
 
-    public void throwPossibleOverdrawException() throws OverdrawException {
-        if (exception != null && exception instanceof OverdrawException) {
-            throw new OverdrawException(exception.getMessage(), exception);
+    void throwPossibleOverdrawException() throws OverdrawException {
+        if (result instanceof OverdrawException) {
+            throw (OverdrawException) result;
         }
     }
 
-    public static class InvalidTask extends Task {
+    interface TaskFunction extends BiFunction<BankDriver, Object[], Object>, Serializable {
 
         @Override
-        public void executeTask(BankDriver driver) throws Exception {
-            // Do nothing and return a null pointer in the result cast. This will trigger a null pointer exception.
-        }
+        Object apply(BankDriver bankdriver, Object[] parameters);
     }
 
-    public static class CreateAccountTask extends Task {
-
-        private final String owner;
-
-        public CreateAccountTask(String owner) {
-            this.owner = owner;
-        }
-
-        @Override
-        public void executeTask(BankDriver driver) throws Exception {
-            this.result = driver.getBank().createAccount(owner);
-        }
+    static TaskFunction invalidTask() {
+        return (bankdriver, parameters) -> null;
     }
 
-    public static class CloseAccountTask extends Task {
-
-        private final String number;
-
-        public CloseAccountTask(String number) {
-            this.number = number;
-        }
-
-        @Override
-        public void executeTask(BankDriver driver) throws Exception {
-            this.result = driver.getBank().closeAccount(number);
-        }
+    static TaskFunction createAccount() throws IOException {
+        return (bankdriver, parameters) -> {
+            try {
+                return bankdriver.getBank().createAccount((String) parameters[0]);
+            } catch (IOException exception) {
+                return exception;
+            }
+        };
     }
 
-    public static class GetAccountNumbersTask extends Task {
-
-        @Override
-        public void executeTask(BankDriver driver) throws Exception {
-            this.result = driver.getBank().getAccountNumbers();
-        }
+    static TaskFunction closeAccount() throws IOException {
+        return ((bankdriver, parameters) -> {
+            try {
+                return bankdriver.getBank().closeAccount((String) parameters[0]);
+            } catch (IOException exception) {
+                return exception;
+            }
+        });
     }
 
-    public static class GetAccountTask extends Task {
-
-        private final String number;
-
-        public GetAccountTask(String number) {
-            this.number = number;
-        }
-
-        @Override
-        public void executeTask(BankDriver driver) throws Exception {
-            this.result = driver.getBank().getAccount(number);
-        }
+    static TaskFunction getAccountNumbers() throws IOException {
+        return ((bankdriver, parameters) -> {
+            try {
+                return bankdriver.getBank().getAccountNumbers();
+            } catch (IOException exception) {
+                return exception;
+            }
+        });
     }
 
-    public static class TransferTask extends Task {
-
-        private final Account from;
-
-        private final Account to;
-
-        private final double amount;
-
-        public TransferTask(Account from, Account to, double amount) {
-            this.from = from;
-            this.to = to;
-            this.amount = amount;
-        }
-
-        @Override
-        public void executeTask(BankDriver driver) throws Exception {
-            driver.getBank().transfer(from, to, amount);
-        }
+    static TaskFunction getAccount() throws IOException {
+        return ((bankdriver, parameters) -> {
+            try {
+                return bankdriver.getBank().getAccount((String) parameters[0]);
+            } catch (IOException exception) {
+                return exception;
+            }
+        });
     }
 
-    public static class IsActiveTask extends Task {
-
-        private final String number;
-
-        public IsActiveTask(String number) {
-            this.number = number;
-        }
-
-        @Override
-        public void executeTask(BankDriver driver) throws Exception {
-            this.result = driver.getBank().getAccount(number).isActive();
-        }
+    static TaskFunction transferAccount() throws IOException {
+        return ((bankdriver, parameters) -> {
+            try {
+                bankdriver.getBank().transfer((Account) parameters[0], (Account) parameters[1], (double) parameters[2]);
+                return null;
+            } catch (IOException | OverdrawException | InactiveException exception) {
+                return exception;
+            }
+        });
     }
 
-    public static class DepositTask extends Task {
-
-        private final String number;
-
-        private final double amount;
-
-        public DepositTask(String number, double amount) {
-            this.number = number;
-            this.amount = amount;
-        }
-
-        @Override
-        public void executeTask(BankDriver driver) throws Exception {
-            driver.getBank().getAccount(number).deposit(amount);
-        }
+    static TaskFunction isActiveAccount() throws IOException {
+        return ((bankdriver, parameters) -> {
+            try {
+                return bankdriver.getBank().getAccount((String) parameters[0]).isActive();
+            } catch (IOException exception) {
+                return exception;
+            }
+        });
     }
 
-    public static class WithdrawTask extends Task {
-
-        private final String number;
-
-        private final double amount;
-
-        public WithdrawTask(String number, double amount) {
-            this.number = number;
-            this.amount = amount;
-        }
-
-        @Override
-        public void executeTask(BankDriver driver) throws Exception {
-            driver.getBank().getAccount(number).withdraw(amount);
-        }
+    static TaskFunction depositAccount() throws IOException {
+        return ((bankdriver, parameters) -> {
+            try {
+                bankdriver.getBank().getAccount((String) parameters[0]).deposit((double) parameters[1]);
+                return null;
+            } catch (IOException | InactiveException exception) {
+                return exception;
+            }
+        });
     }
 
-    public static class GetBalanceTask extends Task {
+    static TaskFunction withdrawAccount() throws IOException {
+        return ((bankdriver, parameters) -> {
+            try {
+                bankdriver.getBank().getAccount((String) parameters[0]).withdraw((double) parameters[1]);
+                return null;
+            } catch (IOException | OverdrawException | InactiveException exception) {
+                return exception;
+            }
+        });
+    }
 
-        private final String number;
-
-        public GetBalanceTask(String number) {
-            this.number = number;
-        }
-
-        @Override
-        public void executeTask(BankDriver driver) throws Exception {
-            this.result = driver.getBank().getAccount(number).getBalance();
-        }
+    static TaskFunction getBalance() throws IOException {
+        return ((bankdriver, parameters) -> {
+            try {
+                return bankdriver.getBank().getAccount((String) parameters[0]).getBalance();
+            } catch (IOException exception) {
+                return exception;
+            }
+        });
     }
 }

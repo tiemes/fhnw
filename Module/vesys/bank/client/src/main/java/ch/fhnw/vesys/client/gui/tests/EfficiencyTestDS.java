@@ -1,4 +1,4 @@
-package ch.fhnw.vesys.shared.gui.tests;
+package ch.fhnw.vesys.client.gui.tests;
 
 public class EfficiencyTestDS extends EfficiencyTest {
 

@@ -1,6 +1,6 @@
 package ch.fhnw.vesys.serversocket;
 
-import ch.fhnw.vesys.shared.BankDriver;
+import ch.fhnw.vesys.shared.api.BankDriver;
 import ch.fhnw.vesys.shared.local.LocalDriver;
 
 import java.io.IOException;
@@ -15,12 +15,12 @@ public class RemoteDriver {
 
     private final BankDriver bankdriver;
 
-    public RemoteDriver(int port) throws IOException {
+    private RemoteDriver(int port) throws IOException {
         serversocket = new ServerSocket(port);
         bankdriver = new LocalDriver();
     }
 
-    public void startServer() throws IOException {
+    private void startServer() throws IOException {
         ExecutorService service = Executors.newCachedThreadPool();
         while (true) {
             Socket socket = serversocket.accept();

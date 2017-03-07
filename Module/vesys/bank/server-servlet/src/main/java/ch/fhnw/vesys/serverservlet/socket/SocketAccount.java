@@ -1,8 +1,8 @@
 package ch.fhnw.vesys.serverservlet.socket;
 
-import ch.fhnw.vesys.shared.Account;
-import ch.fhnw.vesys.shared.InactiveException;
-import ch.fhnw.vesys.shared.OverdrawException;
+import ch.fhnw.vesys.shared.api.Account;
+import ch.fhnw.vesys.shared.api.InactiveException;
+import ch.fhnw.vesys.shared.api.OverdrawException;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -57,10 +57,5 @@ public class SocketAccount implements Account, Serializable {
         Task task = Sender.send(new Task.GetBalanceTask(number));
         task.throwPossibleIoException();
         return (double) task.getResult();
-    }
-
-    @Override
-    public void close() throws IOException {
-        // Do nothing, because the method is never called and the functionality is already defined in BankSocket.
     }
 }

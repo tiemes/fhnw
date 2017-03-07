@@ -3,7 +3,7 @@
  * All Rights Reserved.
  */
 
-package ch.fhnw.vesys.shared;
+package ch.fhnw.vesys.shared.api;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -81,11 +81,4 @@ public interface Account extends Serializable {
      * @throws IOException if a remoting or communication problem occurs
      */
     double getBalance() throws IOException;
-
-    /**
-     * Close the account.
-     *
-     * @throws IOException if a remoting or communication problem occurs
-     */
-    void close() throws IOException;
 }
