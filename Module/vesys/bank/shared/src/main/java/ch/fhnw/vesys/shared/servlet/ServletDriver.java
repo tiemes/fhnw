@@ -4,6 +4,11 @@ import ch.fhnw.vesys.shared.core.Driver;
 import ch.fhnw.vesys.shared.core.Sender;
 import ch.fhnw.vesys.shared.core.Task;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class ServletDriver extends Driver {
 
     private static final ServletSender sender = new ServletSender();
@@ -33,7 +38,19 @@ public class ServletDriver extends Driver {
 
         @Override
         public Task sendTask(Task task) {
-            return null;
+            try {
+                URL url = new URL("http://" + hostname + ":" + port);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                ObjectOutputStream outputstream = new ObjectOutputStream(connection.getOutputStream());
+                outputstream.writeObject(task);
+                ObjectInputStream inputstream = new ObjectInputStream(connection.getInputStream());
+                task = (Task) inputstream.readObject();
+                return task;
+            } catch (Exception exception) {
+                return new Task.InvalidTask();
+            }
         }
     }
 }

@@ -2,6 +2,9 @@
 target/
 bin/
 
+# Build system plugins
+dependency-reduced-pom.xml
+
 # IDE from JetBrains
 .idea
 *.iml
