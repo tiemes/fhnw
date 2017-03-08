@@ -1,36 +1,27 @@
 package ch.fhnw.vesys.serverservlet;
 
 import ch.fhnw.vesys.shared.api.BankDriver;
-import ch.fhnw.vesys.shared.core.Task;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-class RequestHandler implements Runnable {
+class RequestHandler extends HttpServlet {
 
     private final BankDriver bankdriver;
 
-    private final Socket socket;
-
-    RequestHandler(BankDriver bankdriver, Socket socket) {
+    RequestHandler(BankDriver bankdriver) {
         this.bankdriver = bankdriver;
-        this.socket = socket;
     }
 
     @Override
-    public void run() {
-        try {
-            ObjectInputStream inputstream = new ObjectInputStream(socket.getInputStream());
-            Task task = (Task) inputstream.readObject();
-            task.executeHandledTask(bankdriver);
-            ObjectOutputStream outputstream = new ObjectOutputStream(socket.getOutputStream());
-            outputstream.writeObject(task);
-            inputstream.close();
-            outputstream.close();
-            socket.close();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ServletOutputStream out = resp.getOutputStream();
+        out.write("Hello vesys!".getBytes());
+        out.flush();
+        out.close();
     }
 }

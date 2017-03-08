@@ -11,16 +11,9 @@ import java.util.concurrent.Executors;
 
 class SocketServer {
 
-    private final ServerSocket serversocket;
-
-    private final BankDriver bankdriver;
-
     private SocketServer(int port) throws IOException {
-        serversocket = new ServerSocket(port);
-        bankdriver = new LocalDriver();
-    }
-
-    private void startServer() throws IOException {
+        ServerSocket serversocket = new ServerSocket(port);
+        BankDriver bankdriver = new LocalDriver();
         ExecutorService service = Executors.newCachedThreadPool();
         while (true) {
             Socket socket = serversocket.accept();
@@ -29,6 +22,6 @@ class SocketServer {
     }
 
     public static void main(String[] args) throws IOException {
-        new SocketServer(1234).startServer();
+        new SocketServer(1234);
     }
 }
