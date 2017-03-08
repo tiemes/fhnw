@@ -1,7 +1,7 @@
 package ch.fhnw.vesys.serverservlet;
 
 import ch.fhnw.vesys.shared.api.BankDriver;
-import ch.fhnw.vesys.shared.socket.Task;
+import ch.fhnw.vesys.shared.core.Task;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

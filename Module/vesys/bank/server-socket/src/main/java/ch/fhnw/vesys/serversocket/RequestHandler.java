@@ -1,7 +1,7 @@
 package ch.fhnw.vesys.serversocket;
 
 import ch.fhnw.vesys.shared.api.BankDriver;
-import ch.fhnw.vesys.shared.socket.Task;
+import ch.fhnw.vesys.shared.core.Task;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,6 +27,7 @@ class RequestHandler implements Runnable {
             outputstream.writeObject(task);
             socket.close();
         } catch (Exception exception) {
+            exception.printStackTrace();
             try {
                 socket.close();
             } catch (IOException realexception) {

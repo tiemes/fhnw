@@ -1,4 +1,4 @@
-package ch.fhnw.vesys.shared.socket;
+package ch.fhnw.vesys.shared.core;
 
 import ch.fhnw.vesys.shared.api.Account;
 import ch.fhnw.vesys.shared.api.BankDriver;
@@ -9,66 +9,16 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.function.BiFunction;
 
-public class Task implements Serializable {
+public interface TaskBiFunction extends BiFunction<BankDriver, Object[], Object>, Serializable {
 
-    private TaskFunction taskfunction;
+    @Override
+    Object apply(BankDriver bankdriver, Object[] parameters);
 
-    private Object[] parameters;
-
-    private Object result;
-
-    Task(TaskFunction taskfunction, Object... parameters) {
-        this.taskfunction = taskfunction;
-        this.parameters = parameters;
-    }
-
-    public void execute(BankDriver bankdriver) {
-        try {
-            result = taskfunction.apply(bankdriver, parameters);
-        } catch (Exception exception) {
-            result = exception;
-        }
-    }
-
-    Object getResult() {
-        return result;
-    }
-
-    void throwPossibleIoException() throws IOException {
-        if (result != null && result instanceof IOException) {
-            throw (IOException) result;
-        }
-    }
-
-    void throwPossibleIllegalArgumentException() throws IllegalArgumentException {
-        if (result instanceof IllegalArgumentException) {
-            throw (IllegalArgumentException) result;
-        }
-    }
-
-    void throwPossibleInactiveEception() throws InactiveException {
-        if (result instanceof InactiveException) {
-            throw (InactiveException) result;
-        }
-    }
-
-    void throwPossibleOverdrawException() throws OverdrawException {
-        if (result instanceof OverdrawException) {
-            throw (OverdrawException) result;
-        }
-    }
-
-    interface TaskFunction extends BiFunction<BankDriver, Object[], Object>, Serializable {
-
-        @Override
-        Object apply(BankDriver bankdriver, Object[] parameters);
-    }
-
-    static TaskFunction invalidTask() {
+    static TaskBiFunction invalidTask() {
         return (bankdriver, parameters) -> null;
     }
 
-    static TaskFunction createAccount() throws IOException {
+    static TaskBiFunction createAccount() throws IOException {
         return (bankdriver, parameters) -> {
             try {
                 return bankdriver.getBank().createAccount((String) parameters[0]);
@@ -78,7 +28,7 @@ public class Task implements Serializable {
         };
     }
 
-    static TaskFunction closeAccount() throws IOException {
+    static TaskBiFunction closeAccount() throws IOException {
         return ((bankdriver, parameters) -> {
             try {
                 return bankdriver.getBank().closeAccount((String) parameters[0]);
@@ -88,7 +38,7 @@ public class Task implements Serializable {
         });
     }
 
-    static TaskFunction getAccountNumbers() throws IOException {
+    static TaskBiFunction getAccountNumbers() throws IOException {
         return ((bankdriver, parameters) -> {
             try {
                 return bankdriver.getBank().getAccountNumbers();
@@ -98,7 +48,7 @@ public class Task implements Serializable {
         });
     }
 
-    static TaskFunction getAccount() throws IOException {
+    static TaskBiFunction getAccount() throws IOException {
         return ((bankdriver, parameters) -> {
             try {
                 return bankdriver.getBank().getAccount((String) parameters[0]);
@@ -108,7 +58,7 @@ public class Task implements Serializable {
         });
     }
 
-    static TaskFunction transferAccount() throws IOException {
+    static TaskBiFunction transferAccount() throws IOException {
         return ((bankdriver, parameters) -> {
             try {
                 bankdriver.getBank().transfer((Account) parameters[0], (Account) parameters[1], (double) parameters[2]);
@@ -119,7 +69,7 @@ public class Task implements Serializable {
         });
     }
 
-    static TaskFunction isActiveAccount() throws IOException {
+    static TaskBiFunction isActiveAccount() throws IOException {
         return ((bankdriver, parameters) -> {
             try {
                 return bankdriver.getBank().getAccount((String) parameters[0]).isActive();
@@ -129,7 +79,7 @@ public class Task implements Serializable {
         });
     }
 
-    static TaskFunction depositAccount() throws IOException {
+    static TaskBiFunction depositAccount() throws IOException {
         return ((bankdriver, parameters) -> {
             try {
                 bankdriver.getBank().getAccount((String) parameters[0]).deposit((double) parameters[1]);
@@ -140,7 +90,7 @@ public class Task implements Serializable {
         });
     }
 
-    static TaskFunction withdrawAccount() throws IOException {
+    static TaskBiFunction withdrawAccount() throws IOException {
         return ((bankdriver, parameters) -> {
             try {
                 bankdriver.getBank().getAccount((String) parameters[0]).withdraw((double) parameters[1]);
@@ -151,7 +101,7 @@ public class Task implements Serializable {
         });
     }
 
-    static TaskFunction getBalance() throws IOException {
+    static TaskBiFunction getBalance() throws IOException {
         return ((bankdriver, parameters) -> {
             try {
                 return bankdriver.getBank().getAccount((String) parameters[0]).getBalance();
