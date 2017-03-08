@@ -3,7 +3,6 @@ package ch.fhnw.vesys.shared.servlet;
 import ch.fhnw.vesys.shared.core.Driver;
 import ch.fhnw.vesys.shared.core.Sender;
 import ch.fhnw.vesys.shared.core.Task;
-import ch.fhnw.vesys.shared.core.TaskBiFunction;
 
 public class ServletDriver extends Driver {
 
@@ -18,6 +17,7 @@ public class ServletDriver extends Driver {
         ServletSender.hostname = args[0];
         ServletSender.port = Integer.parseInt(args[1]);
         System.out.println("Connected to servlet driver.");
+
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ServletDriver extends Driver {
         static int port;
 
         @Override
-        public Task sendTask(TaskBiFunction taskbifunction, Object... parameters) {
+        public Task sendTask(Task task) {
             return null;
         }
     }

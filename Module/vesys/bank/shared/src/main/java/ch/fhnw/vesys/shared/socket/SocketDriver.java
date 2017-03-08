@@ -3,7 +3,6 @@ package ch.fhnw.vesys.shared.socket;
 import ch.fhnw.vesys.shared.core.Driver;
 import ch.fhnw.vesys.shared.core.Sender;
 import ch.fhnw.vesys.shared.core.Task;
-import ch.fhnw.vesys.shared.core.TaskBiFunction;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
@@ -37,14 +36,19 @@ public class SocketDriver extends Driver {
         static int port;
 
         @Override
-        public Task sendTask(TaskBiFunction taskbifunction, Object... parameters) {
-            try (Socket socket = new Socket(hostname, port); ObjectOutput outputstream = new ObjectOutputStream(socket.getOutputStream()); ObjectInputStream inputstream = new ObjectInputStream(socket.getInputStream());) {
-                Task task = new Task(taskbifunction, parameters);
+        public Task sendTask(Task task) {
+            try {
+                Socket socket = new Socket(hostname, port);
+                ObjectOutput outputstream = new ObjectOutputStream(socket.getOutputStream());
                 outputstream.writeObject(task);
+                ObjectInputStream inputstream = new ObjectInputStream(socket.getInputStream());
                 task = (Task) inputstream.readObject();
+                inputstream.close();
+                outputstream.close();
+                socket.close();
                 return task;
             } catch (Exception exception) {
-                return new Task(TaskBiFunction.invalidTask());
+                return new Task.InvalidTask();
             }
         }
     }

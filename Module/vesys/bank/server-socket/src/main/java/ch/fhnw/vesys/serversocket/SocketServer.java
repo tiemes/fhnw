@@ -9,13 +9,13 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class RemoteDriver {
+class SocketServer {
 
     private final ServerSocket serversocket;
 
     private final BankDriver bankdriver;
 
-    private RemoteDriver(int port) throws IOException {
+    private SocketServer(int port) throws IOException {
         serversocket = new ServerSocket(port);
         bankdriver = new LocalDriver();
     }
@@ -29,6 +29,6 @@ public class RemoteDriver {
     }
 
     public static void main(String[] args) throws IOException {
-        new RemoteDriver(1234).startServer();
+        new SocketServer(1234).startServer();
     }
 }

@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class RemoteDriver {
+class ServletServer {
 
     private final BankDriver bankdriver;
 
-    private RemoteDriver(int port) throws IOException {
+    private ServletServer(int port) throws IOException {
         bankdriver = new LocalDriver();
     }
 
@@ -24,6 +24,6 @@ public class RemoteDriver {
     }
 
     public static void main(String[] args) throws IOException {
-        new RemoteDriver(1234).startServer();
+        new ServletServer(1234).startServer();
     }
 }

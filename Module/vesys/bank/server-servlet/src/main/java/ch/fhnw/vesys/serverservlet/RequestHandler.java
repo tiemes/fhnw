@@ -7,13 +7,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class RequestHandler implements Runnable {
+class RequestHandler implements Runnable {
 
     private final BankDriver bankdriver;
 
     private final Socket socket;
 
-    public RequestHandler(BankDriver bankdriver, Socket socket) {
+    RequestHandler(BankDriver bankdriver, Socket socket) {
         this.bankdriver = bankdriver;
         this.socket = socket;
     }
@@ -23,7 +23,7 @@ public class RequestHandler implements Runnable {
         try {
             ObjectInputStream inputstream = new ObjectInputStream(socket.getInputStream());
             Task task = (Task) inputstream.readObject();
-            task.execute(bankdriver);
+            task.executeHandledTask(bankdriver);
             ObjectOutputStream outputstream = new ObjectOutputStream(socket.getOutputStream());
             outputstream.writeObject(task);
             inputstream.close();

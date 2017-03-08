@@ -33,7 +33,7 @@
                             <transformers>
                                 <transformer
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ch.fhnw.vesys.serversocket.RemoteDriver</mainClass>
+                                    <mainClass>ch.fhnw.vesys.serversocket.SocketServer</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
