@@ -6,7 +6,6 @@
 package ch.fhnw.vesys.client;
 
 import ch.fhnw.vesys.shared.api.BankDriver;
-import ch.fhnw.vesys.client.gui.BankGUI;
 
 import javax.swing.*;
 import java.io.IOException;
