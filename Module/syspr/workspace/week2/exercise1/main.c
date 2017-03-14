@@ -15,14 +15,14 @@ void display_address(address_t *address) {
     printf("Name %s\n", address->name);
     printf("Street %s\n", address->street);
     printf("Number %d\n", address->number);
-    printf("Zip %d\n", address->zip);
+    printf("Zip %ld\n", address->zip);
     printf("Town %s\n", address->town);
 }
 
 int main(void) {
     // Define the address values
     char *name = "Simon Wächter";
-    char *street = "Somewhere Street" + '\0';
+    char *street = "Somewhere Street";
     char *town = "Basel";
     short number = 42;
     long zip = 4053;
