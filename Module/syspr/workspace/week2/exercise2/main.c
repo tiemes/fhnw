@@ -83,25 +83,48 @@ int main(void) {
     address2 = delete_address(address2);
     printf("The pointer addresses of the deleted addresses are %p and %p\n", address1, address2);
 
-    // Create the addresses
+    // Create the addresses on the stack
     int studentnumber = 10;
-    address_ptr_t addresses[studentnumber];
+    address_ptr_t stackaddresses[studentnumber];
     for (int i = 0; i < studentnumber; i++) {
         char nameprefix[] = "Name ";
         char realname[50] = {};
         sprintf(realname, "%s%d", nameprefix, i);
-        addresses[i] = create_address(realname, "Street", 100, 4000, "Town");
+        stackaddresses[i] = create_address(realname, "Street", 100, 4000, "Town");
+        display_address(stackaddresses[i]);
     }
 
-    // Display the addresses
+    // Create the addresses as array on the heap
+    address_ptr_t heapaddresses = malloc(studentnumber * sizeof(address_t));
     for (int i = 0; i < studentnumber; i++) {
-        display_address(addresses[i]);
+        char nameprefix[] = "Name ";
+        char realname[50] = {};
+        sprintf(realname, "%s%d", nameprefix, i);
+        copy_address_by_values(&heapaddresses[i], realname, "Street", 100, 4000, "Town");
+        display_address(&heapaddresses[i]);
+    }
+
+    // Create the addresses as pointer array on the heap
+    address_ptr_t *heappointeraddresses = malloc(studentnumber * sizeof(address_ptr_t));
+    for (int i = 0; i < studentnumber; i++) {
+        char nameprefix[] = "Name ";
+        char realname[50] = {};
+        sprintf(realname, "%s%d", nameprefix, i);
+        heappointeraddresses[i] = create_address(realname, "Street", 100, 4000, "Town");
+        display_address(heappointeraddresses[i]);
     }
 
     // Delete the addresses
     for (int i = 0; i < studentnumber; i++) {
-        addresses[i] = delete_address(addresses[i]);
+        stackaddresses[i] = delete_address(stackaddresses[i]);
     }
 
+    // Delete the addresses;
+    free(heapaddresses);
+
+    // Delete the addresses
+    for (int i = 0; i < studentnumber; i++) {
+        heappointeraddresses[i] = delete_address(heappointeraddresses[i]);
+    }
     return 0;
 }
