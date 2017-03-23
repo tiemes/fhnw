@@ -24,7 +24,7 @@ public abstract class Task implements Serializable {
         }
     }
 
-    Object getResult() {
+    public Object getResult() {
         return result;
     }
 

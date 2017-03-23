@@ -14,6 +14,7 @@
         <module>client-run</module>
         <module>server-socket</module>
         <module>server-servlet</module>
+        <module>server-soap</module>
         <module>shared</module>
     </modules>
     <build>
