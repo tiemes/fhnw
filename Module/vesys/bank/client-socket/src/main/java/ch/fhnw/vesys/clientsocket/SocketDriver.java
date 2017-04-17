@@ -1,7 +1,7 @@
-package ch.fhnw.vesys.shared.socket;
+package ch.fhnw.vesys.clientsocket;
 
-import ch.fhnw.vesys.shared.core.Driver;
 import ch.fhnw.vesys.shared.core.Sender;
+import ch.fhnw.vesys.shared.core.SerializationDriver;
 import ch.fhnw.vesys.shared.core.Task;
 
 import java.io.ObjectInputStream;
@@ -9,7 +9,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class SocketDriver extends Driver {
+public class SocketDriver extends SerializationDriver {
 
     private static final SocketSender sender = new SocketSender();
 

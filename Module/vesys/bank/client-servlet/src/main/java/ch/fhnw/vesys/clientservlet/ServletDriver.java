@@ -1,7 +1,7 @@
-package ch.fhnw.vesys.shared.servlet;
+package ch.fhnw.vesys.clientservlet;
 
-import ch.fhnw.vesys.shared.core.Driver;
 import ch.fhnw.vesys.shared.core.Sender;
+import ch.fhnw.vesys.shared.core.SerializationDriver;
 import ch.fhnw.vesys.shared.core.Task;
 
 import java.io.ObjectInputStream;
@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ServletDriver extends Driver {
+public class ServletDriver extends SerializationDriver {
 
     private static final ServletSender sender = new ServletSender();
 

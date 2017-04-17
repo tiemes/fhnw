@@ -1,4 +1,4 @@
-package ch.fhnw.vesys.shared.soap;
+package ch.fhnw.vesys.clientsoap;
 
 import ch.fhnw.vesys.shared.api.BankDriver;
 import ch.fhnw.vesys.shared.core.Task;
@@ -7,7 +7,7 @@ import ch.fhnw.vesys.shared.local.LocalDriver;
 import javax.jws.WebService;
 import java.io.*;
 
-@WebService(endpointInterface = "ch.fhnw.vesys.shared.soap.TaskService")
+@WebService(endpointInterface = "ch.fhnw.vesys.clientsoap.TaskService")
 public class TaskServiceImpl implements TaskService {
 
     private final BankDriver bankdriver = new LocalDriver();

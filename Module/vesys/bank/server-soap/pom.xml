@@ -16,7 +16,12 @@
             <artifactId>shared</artifactId>
             <version>0.0.1</version>
         </dependency>
-     </dependencies>
+        <dependency>
+            <groupId>ch.fhnw.vesys</groupId>
+            <artifactId>client-soap</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

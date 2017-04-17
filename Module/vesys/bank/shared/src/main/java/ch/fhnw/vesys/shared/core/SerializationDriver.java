@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Set;
 
-public abstract class Driver implements BankDriver {
+public abstract class SerializationDriver implements BankDriver {
 
-    private final InternalBank bank;
+    private final SerializationBank bank;
 
-    public Driver(Sender sender) {
-        this.bank = new InternalBank(sender);
+    public SerializationDriver(Sender sender) {
+        this.bank = new SerializationBank(sender);
     }
 
     abstract public void connect(String[] args);
@@ -24,44 +24,56 @@ public abstract class Driver implements BankDriver {
         return bank;
     }
 
-    private static class InternalBank implements Bank {
+    private static class SerializationBank implements Bank {
 
-        private final Converter converter;
+        private final SerializationConverter converter;
 
         private final Sender sender;
 
-        InternalBank(Sender sender) {
-            this.converter = new InternalConverter();
+        SerializationBank(Sender sender) {
+            this.converter = new SerializationConverter();
             this.sender = sender;
         }
 
         @Override
         public String createAccount(String owner) throws IOException {
-            return TaskRunner.launchCreateAccountTask(sender, owner);
+            Task task = sender.sendTask(new Task.CreateAccountTask(owner));
+            task.throwPossibleIoException();
+            return (String) task.getResult();
         }
 
         @Override
         public boolean closeAccount(String number) throws IOException {
-            return TaskRunner.launchCloseAccountTask(sender, number);
+            Task task = sender.sendTask(new Task.CloseAccountTask(number));
+            task.throwPossibleIoException();
+            return (boolean) task.getResult();
         }
 
         @Override
         public Set<String> getAccountNumbers() throws IOException {
-            return TaskRunner.launchGetAccountNumbers(sender);
+            Task task = sender.sendTask(new Task.GetAccountNumbersTask());
+            task.throwPossibleIoException();
+            return (Set<String>) task.getResult();
         }
 
         @Override
         public Account getAccount(String number) throws IOException {
-            return TaskRunner.launchGetAccountTask(converter, sender, number);
+            Task task = sender.sendTask(new Task.GetAccountTask(number));
+            task.throwPossibleIoException();
+            return converter.fromLocalToRemoteAccount(sender, (Account) task.getResult());
         }
 
         @Override
         public void transfer(Account from, Account to, double amount) throws IOException, IllegalArgumentException, OverdrawException, InactiveException {
-            TaskRunner.launchTransferTask(converter, sender, from, to, amount);
+            Task task = sender.sendTask(new Task.TransferTask(converter.fromRemoteToLocalAccount(from), converter.fromRemoteToLocalAccount(to), amount));
+            task.throwPossibleIoException();
+            task.throwPossibleIllegalArgumentException();
+            task.throwPossibleInactiveEception();
+            task.throwPossibleOverdrawException();
         }
     }
 
-    private static class InternalAccount implements Account, Serializable {
+    private static class SerializationAccount implements Account, Serializable {
 
         private final Sender sender;
 
@@ -69,7 +81,7 @@ public abstract class Driver implements BankDriver {
 
         private final String owner;
 
-        InternalAccount(Sender sender, String number, String owner) {
+        SerializationAccount(Sender sender, String number, String owner) {
             this.sender = sender;
             this.number = number;
             this.owner = owner;
@@ -87,36 +99,45 @@ public abstract class Driver implements BankDriver {
 
         @Override
         public boolean isActive() throws IOException {
-            return TaskRunner.launchIsActiveTask(sender, number);
+            Task task = sender.sendTask(new Task.IsActiveTask(number));
+            task.throwPossibleIoException();
+            return (boolean) task.getResult();
         }
 
         @Override
         public void deposit(double amount) throws IOException, IllegalArgumentException, InactiveException {
-            TaskRunner.launchDepositTask(sender, number, amount);
+            Task task = sender.sendTask(new Task.DepositTask(number, amount));
+            task.throwPossibleIoException();
+            task.throwPossibleIllegalArgumentException();
+            task.throwPossibleInactiveEception();
         }
 
         @Override
         public void withdraw(double amount) throws IOException, IllegalArgumentException, OverdrawException, InactiveException {
-            TaskRunner.launchWithdrawTask(sender, number, amount);
+            Task task = sender.sendTask(new Task.WithdrawTask(number, amount));
+            task.throwPossibleIoException();
+            task.throwPossibleIllegalArgumentException();
+            task.throwPossibleOverdrawException();
+            task.throwPossibleInactiveEception();
         }
 
         @Override
         public double getBalance() throws IOException {
-            return TaskRunner.launchGetBalanceTask(sender, number);
+            Task task = sender.sendTask(new Task.GetBalanceTask(number));
+            task.throwPossibleIoException();
+            return (double) task.getResult();
         }
     }
 
-    private static class InternalConverter implements Converter {
+    private static class SerializationConverter {
 
-        @Override
         public Account fromLocalToRemoteAccount(Sender sender, Account localaccount) throws IOException {
             if (localaccount == null) {
                 return null;
             }
-            return new InternalAccount(sender, localaccount.getNumber(), localaccount.getOwner());
+            return new SerializationAccount(sender, localaccount.getNumber(), localaccount.getOwner());
         }
 
-        @Override
         public Account fromRemoteToLocalAccount(Account remoteaccount) throws IOException, InactiveException {
             if (remoteaccount == null) {
                 return null;

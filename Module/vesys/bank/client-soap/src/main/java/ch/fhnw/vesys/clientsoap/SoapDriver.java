@@ -1,15 +1,14 @@
-package ch.fhnw.vesys.shared.soap;
+package ch.fhnw.vesys.clientsoap;
 
-import ch.fhnw.vesys.shared.core.Driver;
 import ch.fhnw.vesys.shared.core.Sender;
+import ch.fhnw.vesys.shared.core.SerializationDriver;
 import ch.fhnw.vesys.shared.core.Task;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import java.net.URL;
 
-public class SoapDriver extends Driver {
-
+public class SoapDriver extends SerializationDriver {
 
     private static final SoapSender sender = new SoapSender();
 
@@ -22,7 +21,6 @@ public class SoapDriver extends Driver {
         SoapSender.hostname = args[0];
         SoapSender.port = Integer.parseInt(args[1]);
         System.out.println("Connected to soap driver.");
-
     }
 
     @Override
@@ -40,7 +38,7 @@ public class SoapDriver extends Driver {
         public Task sendTask(Task task) {
             try {
                 URL wsdlurl = new URL("http://" + hostname + ":" + port + "/task?wsdl");
-                QName qname = new QName("http://soap.shared.vesys.fhnw.ch/", "TaskServiceImplService");
+                QName qname = new QName("http://clientsoap.vesys.fhnw.ch/", "TaskServiceImplService");
                 Service service = Service.create(wsdlurl, qname);
                 TaskService taskservice = service.getPort(TaskService.class);
                 return TaskServiceImpl.fromByteArrayToTask(taskservice.handleTask(TaskServiceImpl.fromTaskToByteArray(task)));

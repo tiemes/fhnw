@@ -1,6 +1,6 @@
 package ch.fhnw.vesys.serversoap;
 
-import ch.fhnw.vesys.shared.soap.TaskServiceImpl;
+import ch.fhnw.vesys.clientsoap.TaskServiceImpl;
 
 import javax.xml.ws.Endpoint;
 

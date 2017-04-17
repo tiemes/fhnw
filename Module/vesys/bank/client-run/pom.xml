@@ -23,6 +23,21 @@
         </dependency>
         <dependency>
             <groupId>ch.fhnw.vesys</groupId>
+            <artifactId>client-socket</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.fhnw.vesys</groupId>
+            <artifactId>client-servlet</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.fhnw.vesys</groupId>
+            <artifactId>client-soap</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.fhnw.vesys</groupId>
             <artifactId>client-rest</artifactId>
             <version>0.0.1</version>
         </dependency>
