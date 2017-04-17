@@ -15,6 +15,7 @@
         <module>server-socket</module>
         <module>server-servlet</module>
         <module>server-soap</module>
+        <module>server-rest</module>
         <module>shared</module>
     </modules>
     <build>
