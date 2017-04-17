@@ -21,6 +21,11 @@
             <artifactId>client</artifactId>
             <version>0.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>ch.fhnw.vesys</groupId>
+            <artifactId>client-rest</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

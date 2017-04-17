@@ -31,7 +31,7 @@ public class RestController {
         String number = bankdriver.getBank().createAccount(owner);
         UriBuilder builder = uriinfo.getAbsolutePathBuilder();
         builder.path(number);
-        return Response.created(builder.build()).build();
+        return Response.created(builder.build()).entity(number).build();
     }
 
     @GET
@@ -54,10 +54,18 @@ public class RestController {
             throw new NotFoundException("Unable to find the account");
         }
 
-        if (amount > 0) {
-            account.deposit(amount);
-        } else if (amount < 0) {
-            account.withdraw(amount);
+        if (amount < 0 && account.getBalance() - amount < 0) {
+            return Response.serverError().build();
+        }
+
+        try {
+            if (amount > 0) {
+                account.deposit(amount);
+            } else if (amount < 0) {
+                account.withdraw(Math.abs(amount));
+            }
+        } catch (Exception exception) {
+            return Response.serverError().build();
         }
         return Response.ok().build();
     }

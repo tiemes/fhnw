@@ -12,6 +12,7 @@
     <modules>
         <module>client</module>
         <module>client-run</module>
+        <module>client-rest</module>
         <module>server-socket</module>
         <module>server-servlet</module>
         <module>server-soap</module>

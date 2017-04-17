@@ -12,6 +12,11 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>ch.fhnw.vesys</groupId>
+            <artifactId>shared</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
             <version>9.4.3.v20170317</version>
@@ -45,11 +50,6 @@
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>2.26-b03</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.fhnw.vesys</groupId>
-            <artifactId>shared</artifactId>
-            <version>0.0.1</version>
         </dependency>
     </dependencies>
     <build>

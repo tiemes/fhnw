@@ -25,7 +25,7 @@ public class LocalDriver implements BankDriver {
         return bank;
     }
 
-    private static class LocalBank implements Bank {
+    public static class LocalBank implements Bank {
 
         private final Map<String, LocalAccount> accounts = new HashMap<>();
 
@@ -81,13 +81,16 @@ public class LocalDriver implements BankDriver {
 
     public static class LocalAccount implements Account {
 
-        private final String number;
+        private String number;
 
-        private final String owner;
+        private String owner;
 
         private double balance;
 
         public boolean active = true;
+
+        public LocalAccount() {
+        }
 
         public LocalAccount(String owner, String number) {
             this.owner = owner;

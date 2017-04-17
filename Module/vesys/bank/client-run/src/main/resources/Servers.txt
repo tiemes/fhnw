@@ -2,3 +2,4 @@ ch.fhnw.vesys.shared.local.LocalDriver
 ch.fhnw.vesys.shared.socket.SocketDriver localhost 1234
 ch.fhnw.vesys.shared.servlet.ServletDriver localhost 1234
 ch.fhnw.vesys.shared.soap.SoapDriver localhost 1234
+ch.fhnw.vesys.clientrest.RestDriver localhost 1234
