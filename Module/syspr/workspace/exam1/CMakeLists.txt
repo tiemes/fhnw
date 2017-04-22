@@ -1,0 +1,5 @@
+add_subdirectory(fork)
+add_subdirectory(grep)
+add_subdirectory(pipe)
+add_subdirectory(namedpipe)
+add_subdirectory(dup)

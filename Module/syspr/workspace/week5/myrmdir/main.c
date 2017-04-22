@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
+#define include 1
+
 int main(int argc, char *argv[]) {
 
     if (argc != 2) {
