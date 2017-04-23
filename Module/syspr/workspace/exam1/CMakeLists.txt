@@ -3,3 +3,8 @@ add_subdirectory(grep)
 add_subdirectory(pipe)
 add_subdirectory(namedpipe)
 add_subdirectory(dup)
+add_subdirectory(kill)
+add_subdirectory(signal)
+add_subdirectory(signalreplacement)
+add_subdirectory(jmp)
+

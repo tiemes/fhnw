@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 
-#define MAX_COUNT 50
+#define MAX_COUNT 50000
 
 void handle_child(void) {
     int i;
@@ -10,14 +11,6 @@ void handle_child(void) {
         printf("This line is from child, value = %d\n", i);
     }
     printf("Child process is done\n");
-}
-
-void handle_parent(void) {
-    int i;
-    for (i = 1; i <= MAX_COUNT; i++) {
-        printf("This line is from parent, value = %d\n", i);
-    }
-    printf("Parent is done\n");
 }
 
 int main(void) {
@@ -31,7 +24,8 @@ int main(void) {
     if (pid == 0) {
         handle_child();
     } else {
-        handle_parent();
+        sleep(1);
+        kill(pid, SIGUSR1);
     }
     return EXIT_SUCCESS;
 }
