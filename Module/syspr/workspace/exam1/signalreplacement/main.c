@@ -5,7 +5,7 @@
 
 static int timedout;
 
-void (* oldsignal)();
+void (*oldsignal)();
 
 void signal_handler(int signum) {
     timedout = 1;
@@ -14,7 +14,7 @@ void signal_handler(int signum) {
 
 int main(void) {
     oldsignal = signal(SIGALRM, signal_handler);
-> 
+
     timedout = 0;
 
     alarm(3);
@@ -23,7 +23,7 @@ int main(void) {
 
     alarm(0);
 
-    if(timedout == 1) {
+    if (timedout == 1) {
         printf("Time overrun\n");
     } else {
         signal(SIGALRM, &oldsignal);
