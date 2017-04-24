@@ -26,7 +26,7 @@ int main(void) {
     if (timedout == 1) {
         printf("Time overrun\n");
     } else {
-        signal(SIGALRM, &oldsignal);
+        signal(SIGALRM, oldsignal);
         printf("Just in time");
     }
 

@@ -52,7 +52,7 @@ int main(void) {
 
     // Create a text without a zero terminator
     char text[50] = {};
-    char *p = &text;
+    char *p = text;
     for (int i = 0; i < sizeof(text); i++) {
         *p = '-';
         p++;
