@@ -1,4 +1,4 @@
-package ch.fhnw.vesys.clientsoap;
+package ch.fhnw.vesys.serversoap;
 
 import ch.fhnw.vesys.shared.api.BankDriver;
 import ch.fhnw.vesys.shared.core.Task;
@@ -7,7 +7,7 @@ import ch.fhnw.vesys.shared.local.LocalDriver;
 import javax.jws.WebService;
 import java.io.*;
 
-@WebService(endpointInterface = "ch.fhnw.vesys.clientsoap.TaskService")
+@WebService(endpointInterface = "ch.fhnw.vesys.serversoap.TaskService")
 public class TaskServiceImpl implements TaskService {
 
     private final BankDriver bankdriver = new LocalDriver();
@@ -19,7 +19,7 @@ public class TaskServiceImpl implements TaskService {
         return fromTaskToByteArray(task);
     }
 
-    static byte[] fromTaskToByteArray(Task task) throws IOException {
+    public static byte[] fromTaskToByteArray(Task task) throws IOException {
         ByteArrayOutputStream byteoutputstream = new ByteArrayOutputStream();
         ObjectOutputStream objectoutputstream = new ObjectOutputStream(byteoutputstream);
         objectoutputstream.writeObject(task);
@@ -29,7 +29,7 @@ public class TaskServiceImpl implements TaskService {
         return data;
     }
 
-    static Task fromByteArrayToTask(byte[] data) throws Exception {
+    public static Task fromByteArrayToTask(byte[] data) throws Exception {
         ByteArrayInputStream byteinputstream = new ByteArrayInputStream(data);
         ObjectInputStream inputstream = new ObjectInputStream((byteinputstream));
         Task task = (Task) inputstream.readObject();

@@ -1,4 +1,4 @@
-package ch.fhnw.vesys.clientsoap;
+package ch.fhnw.vesys.serversoap;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;

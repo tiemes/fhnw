@@ -1,5 +1,7 @@
 package ch.fhnw.vesys.clientsoap;
 
+import ch.fhnw.vesys.serversoap.TaskService;
+import ch.fhnw.vesys.serversoap.TaskServiceImpl;
 import ch.fhnw.vesys.shared.core.Sender;
 import ch.fhnw.vesys.shared.core.SerializationDriver;
 import ch.fhnw.vesys.shared.core.Task;
@@ -38,7 +40,7 @@ public class SoapDriver extends SerializationDriver {
         public Task sendTask(Task task) {
             try {
                 URL wsdlurl = new URL("http://" + hostname + ":" + port + "/task?wsdl");
-                QName qname = new QName("http://clientsoap.vesys.fhnw.ch/", "TaskServiceImplService");
+                QName qname = new QName("http://serversoap.vesys.fhnw.ch/", "TaskServiceImplService");
                 Service service = Service.create(wsdlurl, qname);
                 TaskService taskservice = service.getPort(TaskService.class);
                 return TaskServiceImpl.fromByteArrayToTask(taskservice.handleTask(TaskServiceImpl.fromTaskToByteArray(task)));
