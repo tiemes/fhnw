@@ -43,7 +43,7 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
-    if (pipe(p1)) {
+    if (pipe(p2)) {
         perror("Unable to create the second pipe");
         return EXIT_FAILURE;
     }
@@ -51,14 +51,15 @@ int main(void) {
     int pid1 = fork();
     if (pid1 == 0) {
         char buffer[BUFFER_SIZE] = {0};
-        close(p1[1]);
+        close(p1[0]);
+        close(p2[1]);
         while (counter1 != maxcounter) {
             prepare_buffer(buffer, counter1);
             sync_printf("1 -> 2: Send data: %s\n", buffer);
-            write(p2[1], buffer, sizeof(buffer));
+            write(p1[1], buffer, sizeof(buffer));
 
             clear_buffer(buffer);
-            read(p1[0], buffer, sizeof(buffer));
+            read(p2[0], buffer, sizeof(buffer));
             sync_printf("1 -> 2: Read data: %s\n", buffer);
 
             counter1++;
@@ -69,15 +70,16 @@ int main(void) {
     int pid2 = fork();
     if (pid2 == 0) {
         char buffer[BUFFER_SIZE] = {0};
-        close(p2[1]);
+        close(p1[1]);
+        close(p2[0]);
         while (counter2 != maxcounter) {
-            prepare_buffer(buffer, counter1);
-            sync_printf("2 -> 1: Send data: %s\n", buffer);
-            write(p1[1], buffer, sizeof(buffer));
-
             clear_buffer(buffer);
-            read(p2[0], buffer, sizeof(buffer));
+            read(p1[0], buffer, sizeof(buffer));
             sync_printf("2 -> 1: Read data: %s\n", buffer);
+
+            prepare_buffer(buffer, counter2);
+            sync_printf("2 -> 1: Send data: %s\n", buffer);
+            write(p2[1], buffer, sizeof(buffer));
 
             counter2++;
         }
@@ -85,4 +87,5 @@ int main(void) {
     }
 
     wait(0);
+    return EXIT_SUCCESS;
 }
