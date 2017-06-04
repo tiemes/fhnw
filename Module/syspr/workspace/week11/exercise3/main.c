@@ -52,7 +52,8 @@ int main(void) {
         // Wait for all children (Otherwise we kill it before the child can even execute the read process)
         wait(NULL);
     } else { // Child
-        sleep(2); // Wait for the shared memory page
+        // Wait for the shared memory page
+        sleep(2);
 
         // Get the shared memory
         int shmid = shmget(key, MAX_MEMORY, 0666);
