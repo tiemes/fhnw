@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/ipc.h>
+#include <sys/shm.h>
 #include <sys/sem.h>
 #include <sys/wait.h>
+
+#define MAX_MEMORY 10
 
 int main(void) {
     // Create the key
@@ -46,9 +49,30 @@ int main(void) {
         }
         printf("Parent just entered the critical section\n");
 
-        // Sleep for a while
-        printf("Parent is doing his work\n");
-        sleep(5);
+        // Create the shared memory
+        int shmid = shmget(key, MAX_MEMORY, IPC_CREAT | 0666);
+        if (shmid == -1) {
+            perror("Parent is unable to create the shared memory page");
+            return EXIT_FAILURE;
+        }
+
+        // Attach the shared memory and cast it
+        char *memory = (char *) shmat(shmid, 0, 0);
+        if (memory == (char *) -1) {
+            perror("Parent is unable to attach the shared memory");
+            return EXIT_FAILURE;
+        }
+
+        // Write data
+        for (int i = 0; i < MAX_MEMORY; i++) {
+            memory[i] = (char) ('A' + i);
+        }
+
+        // Detach the shared memory
+        if (shmdt(memory) == -1) {
+            perror("Parent is unable to detach the shared memory");
+            return EXIT_FAILURE;
+        }
 
         // Leave the critical section
         printf("Parent is going to leave the critical section\n");
@@ -80,8 +104,36 @@ int main(void) {
         }
         printf("Child just entered the critical section\n");
 
-        // Do some critical work
-        printf("Child is doing his work\n");
+        // Get the shared memory
+        int shmid = shmget(key, MAX_MEMORY, 0666);
+        if (shmid == -1) {
+            perror("Child is unable to get the shared memory page");
+            return EXIT_FAILURE;
+        }
+
+        // Attach the shared memory
+        char *memory = (char *) shmat(shmid, 0, 0);
+        if (memory == (char *) -1) {
+            perror("Child is unable to attach the shared memory");
+            return EXIT_FAILURE;
+        }
+
+        // Read data
+        for (int i = 0; i < MAX_MEMORY; i++) {
+            printf("Value: %c\n", memory[i]);
+        }
+
+        // Detach the shared memory
+        if (shmdt(memory) == -1) {
+            perror("Child is unable to detach the shared memory");
+            return EXIT_FAILURE;
+        }
+
+        // Delete the shared memory
+        if (shmctl(shmid, IPC_RMID, 0) == -1) {
+            perror("Child is unable to delete the shared memory");
+            return EXIT_FAILURE;
+        }
 
         // Leave the critical section
         printf("Child is going to leave the critical section\n");
