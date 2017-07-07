@@ -16,10 +16,12 @@
         <module>client-servlet</module>
         <module>client-soap</module>
         <module>client-rest</module>
+        <module>client-rmi</module>
         <module>server-socket</module>
         <module>server-servlet</module>
         <module>server-soap</module>
         <module>server-rest</module>
+        <module>server-rmi</module>
         <module>shared</module>
     </modules>
     <build>

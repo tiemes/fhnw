@@ -37,6 +37,7 @@ public class RestDriver implements BankDriver {
 
     @Override
     public void disconnect() throws IOException {
+        bank = null;
         System.out.println("Rest driver disconnected");
     }
 
